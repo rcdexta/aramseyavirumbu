@@ -1,0 +1,58 @@
+= stylesheet_link_tag 'compiled/admin'
+= render :partial => 'common/google_transliterate'
+
+:javascript
+  jQuery.noConflict();
+  jQuery(document).ready(function(){
+    jQuery('#keyboard').click(function(){
+      window.location.href = "?tamil_keyboard=true";
+    });
+  });
+
+= javascript_include_tag 'jquery.observe_field.js'
+= javascript_include_tag 'https://ajax.googleapis.com/ajax/libs/prototype/1.7.0.0/prototype.js'
+= javascript_include_tag 'textile-editor'
+= javascript_include_tag 'textile-editor-config'
+= javascript_include_tag 'textile_preview'
+= stylesheet_link_tag 'textile-editor'
+
+- unless flash.now[:error].blank?
+  .error= flash.now[:error]
+- else
+  - user = @wiki_version.user
+  .revision_user_info
+    .sub_heading
+      %span.photo
+        %img.profile_photo{:src => "#{user.photo || '/images/default_photo.png' }"}
+      .user_details
+        %ul
+          %li
+            %b
+              = user.name
+          %li
+            சமர்ப்பித்தவை:
+            = user.accepted_count + user.rejected_count
+          %li
+            பிரசுரமானவை:
+            = user.accepted_count
+  .clear
+  = form_for @wiki_version, :url => admin_update_wiki_path(@wiki_version) do |wiki_form|
+
+    = render :partial => 'action_buttons'
+
+    - Wiki.essential_attribute_names.each do |attribute|
+      %p.wiki_revision_attribute
+        = render :partial => 'edit_with_diff', :locals => {:wiki_version => @wiki_version, :attribute => attribute.to_sym,
+                                             :changed_attributes => @changed_attributes, :wiki_form => wiki_form}
+
+    = render :partial => 'action_buttons'
+
+:javascript
+  var transliterable_elements = [];
+  jQuery.each(['wiki_version_tamil_short_desc', 'wiki_version_tamil_long_desc'], function(index,value){
+    if (jQuery('#' + value).length){
+      transliterable_elements.push(value);
+    }
+  });
+  makeTransliteratable(transliterable_elements);
+

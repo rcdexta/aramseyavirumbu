@@ -1,0 +1,43 @@
+= javascript_include_tag 'contact_us'
+#logo-container
+  .logo
+    %ul
+      %li#home
+        %a{:href => root_path}
+          %img{:src => '/images/home.png'}
+          முகப்பு
+      %li
+        |
+      %li#mugavurai
+        %img{:src => '/images/mugavurai.png'}
+        வரலாறு
+      %li
+        |
+      %li#about_site
+        %img{:src => '/images/about.png'}
+        = t(:about_site) 
+      %li
+        |
+      - if admin_signed_in?
+        %a{:href => admin_dashboard_path}
+          %li#admin
+            %img{:src => '/images/settings.png'}
+            தளப்பொறுப்பாளர்
+      - else
+        %li#contact_us{:url => new_comment_path}
+          %img{:src => '/images/contact.png'}
+          தொடர்புக்கு
+        %li
+          |
+      %li#user_login
+        - if user_signed_in?
+          = javascript_include_tag 'logout'
+          %img{:src => '/images/logout.png'}
+          %input{:type => 'hidden', :name => 'provider_signout_url', :value => "#{generate_logout_link}"}
+          %a{:href => "#{destroy_user_session_path}", :id => 'logout_link'}
+            %span{:style => 'padding-left: 5px;'} விடைபெறுக 
+        - else
+          %img{:src => '/images/user.png'}
+          = link_to_rpx "உள்நுழைக", root_url
+
+#comments_form.hidden{:title => 'அறம்செயவிரும்பு.com பற்றி உங்களுடைய கருத்துக்கள்'}

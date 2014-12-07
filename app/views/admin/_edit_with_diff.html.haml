@@ -1,0 +1,18 @@
+- if changed_attributes.include? attribute
+  = label(:wiki_version, attribute)
+  #differ= raw generate_diff(wiki_version.send(attribute), wiki_version.wiki.send(attribute))
+  - unless attribute == :tamil_long_desc
+    = wiki_form.text_field attribute
+  - else
+    = raw textile_editor 'wiki_version', 'tamil_long_desc', {:rows => 20, :cols => 75, :wrap => 'soft'}
+    = raw textile_editor_initialize
+    %br
+    %label
+      %span.textile_preview{:url => textile_preview_path} முன்காட்சி
+    #preview_container.wiki_container
+      %p{:style => 'text-align: justify;'}
+        = raw wiki_version.tamil_long_desc_html
+
+- else
+  = label(:wiki_version, attribute)
+  = wiki_version.send(attribute)

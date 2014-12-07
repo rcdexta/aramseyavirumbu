@@ -1,0 +1,104 @@
+.dashboard_title {
+    font-size: 20px;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 10px;
+}
+
+.dashboard_title .sub_title{
+   background: none repeat scroll 0 0 DarkSalmon;
+   padding: 5px 8px;
+   -moz-border-radius: 10px;
+   border-radius: 10px;
+}
+
+#drafts{
+    width: 550px;
+}
+
+table#drafts thead tr td {
+    font-size: 12px;
+    font-weight: bold;
+    text-align: center;
+}
+
+table#drafts tbody tr td {
+    font-size: 12px;
+    text-align: center;
+    overflow: hidden;
+}
+
+table#drafts tbody tr td.time {
+    width: 90px;
+}
+
+table#drafts tbody tr td.paadal {
+    width: 180px;
+}
+
+table#drafts tbody tr td.user {
+    width: 80px;
+}
+
+table#drafts tbody tr td.view {
+    width: 60px;
+}
+
+img.review{
+    height: 24px;
+    vertical-align: middle;
+    width: 24px;
+}
+
+screinput[type='text'] {
+    margin-bottom: 15px;
+    width: 677px;
+    background: #FFFBD0;
+}
+
+textarea{
+    padding: 3px;
+    width: 545px;
+    display: block;
+    background: #FFFBD0;
+}
+
+div.error{
+    background: url("../../images/error.png") no-repeat scroll 4px 6px #E9967A;
+    margin-right: 20px;
+    padding: 5px 5px 5px 39px;
+    width: 642px;
+}
+
+span.alert {
+	background: url(../../images/alert.png) no-repeat scroll 4px 2px #e9967a;
+    padding: 5px 5px 5px 32px;
+    width: auto;
+    margin-right: 20px;
+}
+
+p.wiki_revision_attribute{
+    margin: 15px 0px;
+}
+
+.revision_user_info {
+    height: 82px;
+    border: 1px solid;
+    margin-right: 18px;
+    margin-top: 6px;
+    padding: 0 5px;
+    background: AntiqueWhite;
+    -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.75);
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.05);
+}
+
+#differ{
+    background: none repeat scroll 0 0 #FFFF00;
+    margin-bottom: 5px;
+    padding: 0 5px;
+    width: 545px;
+}
+
+.wiki_container {
+  margin-right: 25px;
+}

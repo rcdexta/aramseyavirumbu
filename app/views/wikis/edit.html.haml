@@ -1,0 +1,73 @@
+= render :partial => 'common/google_transliterate'
+:javascript
+  jQuery.noConflict();
+  jQuery(document).ready(function(){
+    jQuery('#keyboard').click(function(){
+      if (jQuery(this).hasClass('blue')){
+        window.location.href = window.location.href.replace(/\?.*$/,'');
+      }
+      else {
+        window.location.href = "?tamil_keyboard=true";
+      }
+    });
+  });
+
+- unless current_user.accepted_count and current_user.accepted_count > 0
+  :javascript
+    jQuery(document).ready(function(){
+        control_by_cookie('pre_wiki_edit', function(){
+         apprise('#{t(:pre_wiki_edit)}');
+      });
+    });
+
+:javascript
+  makeTransliteratable(['wiki_tamil_short_desc', 'wiki_tamil_long_desc']);
+
+= javascript_include_tag 'jquery.observe_field.js'
+= javascript_include_tag 'https://ajax.googleapis.com/ajax/libs/prototype/1.7.0.0/prototype.js'
+= javascript_include_tag 'textile-editor'
+= javascript_include_tag 'textile-editor-config'
+= javascript_include_tag 'textile_preview'
+= stylesheet_link_tag 'textile-editor'
+
+
+- unless flash[:alert].blank?
+  .alert= flash[:alert]
+
+- if @draft
+  .alert இந்த பாடலுக்காக நீங்கள் சமர்பித்த  முந்திய திருத்தங்கள் ஒப்புதலுக்காக முன்வைக்க பட்டுள்ளன. தற்போது செய்யும்  மாற்றங்கள் அதனுடன் இணைக்கப்படும்...
+
+= simple_form_for @wiki, do |w|
+  = w.button :submit, :class => 'save_button', :value => t(:save_button)
+  = submit_tag t(:reject_button), :class => 'reject_button', :name => 'commit', 'data-confirm' => "மறுத்தலை உறுதி செய்க ..."
+
+  .keyboard_selector
+    #keyboard{:title => 'தமிழ் தட்டச்சுப்பொறி', :class => "#{params[:tamil_keyboard] ? 'blue' : ''}"}
+      தட்டச்சு
+
+  %span.action_button
+    %a{:href=> wiki_path(@wiki)}
+      %img.back_to_show{:src => '/images/first.png'}
+
+  .clear
+  .paadal_title= @wiki.paadal
+  .hline
+  = w.input :paadal, :as => :hidden
+  = w.input :paadal_english, :label => "ஆங்கில எழுத்து பிரதி" 
+  = w.input :tamil_short_desc, :label => "பாடலின் விளக்கம்"
+  = w.input :english_short_desc, :label => "பாடலின் விளக்கம் (ஆங்கிலத்தில்)"
+  %div
+    .left
+      %label
+        விளக்கம்
+  .clear
+  = raw textile_editor 'wiki', 'tamil_long_desc', {:rows => 20, :cols => 75, :wrap => 'soft'}
+  = raw textile_editor_initialize
+  %label
+    %span.textile_preview{:url => textile_preview_path} முன்காட்சி
+  #preview_container.wiki_container
+    %p{:style => 'text-align: justify;'}
+      = raw @wiki.tamil_long_desc_html
+
+  = w.button :submit, :class => 'save_button', :value => t(:save_button)
+  = submit_tag t(:reject_button), :class => 'reject_button', :name => 'commit', 'data-confirm' => "மறுத்தலை உறுதி செய்க ..."
